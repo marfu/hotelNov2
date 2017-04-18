@@ -1,0 +1,126 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="content">
+        <style type="text/css">
+
+            .NON_CONFIRMEE{color: orange;font-weight: bold}
+            .CONFIRMEE{color: green;font-weight: bold}
+            .ANNULEE{color:red;font-weight: bold}
+
+        </style>
+        <div class="Container100">
+            <div class="ContainerIndent">
+
+                <p:breadCrumb>
+                    <p:menuitem value="Home" url="#" />
+                    <p:menuitem value="Depots clients" url="#" />
+                </p:breadCrumb>
+                <div class="EmptyBox20"></div>
+
+
+                <div style="float:left">
+                    <h:panelGrid columns="1" cellpadding="5">
+
+
+                        <p:commandButton value="Ajouter" type="button"  onclick="PF('dlg2').show();"/>
+
+
+                    </h:panelGrid>
+                </div>
+                <h:form id="viewReservation">
+                    <p:growl id="growl" showDetail="true" autoUpdate="true" />  
+                    <p:dataTable var="item" value="#{depositeBean.listTdeposite}" id="grid" paginator="true"
+                                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                 rowsPerPageTemplate="5,10,15">
+
+                       <p:column headerText="Date dépot"  sortBy="#{item.dateCreate}" filterBy="#{item.dateCreate}">
+                           <h:outputText value="#{item.dateCreate}" >
+                           
+                           </h:outputText>
+                        </p:column>
+                        
+                        <p:column headerText="N° piece"  sortBy="#{item.client.numeroPieceIdentite}" filterBy="#{item.client.numeroPieceIdentite}">
+                            <h:outputText value="#{item.client.numeroPieceIdentite}"  />
+                        </p:column>
+
+                        <p:column headerText="Nom client" sortBy="#{item.client.cliNom}" filterBy="#{item.client.cliNom}">
+                            <h:outputText value="#{item.client.cliNom} #{item.client.cliPrenom}"   />
+                        </p:column>
+
+                        <p:column headerText="Montant">
+                            <h:outputText value="#{item.montant}" />
+                        </p:column>
+
+
+                        <p:column style="width:32px">
+                            <p:commandButton ajax="true"     action="#{allReservationBean.detailReservation}" oncomplete="PF('detailsDialog').show();" icon="ui-icon fa fa-edit" style="color:white">
+                                <f:param name="reservationId" value="#{item.depId}" />
+                            </p:commandButton>
+                        </p:column>
+
+
+
+
+
+
+                    </p:dataTable>
+
+
+                </h:form>
+
+                <p:dialog header="Ajout " widgetVar="dlg2" modal="true" height="auto" width="auto" >
+
+
+                    <f:view>
+                        <h:form id="myform">
+
+
+                            <h:panelGrid id="grid" columns="2" cellpadding="5">
+
+                              
+
+
+                                <h:outputLabel value="Client:"  />
+                              
+                               <p:selectOneMenu value="#{depositeBean.clientId}" required="true" label="Client">  
+                                        <f:selectItem itemLabel="Selectioner un client" itemValue="" />  
+                                        <f:selectItems value="#{tClientBean.listClient}" var="tag1"
+                                                       itemLabel="#{tag1.cliNom} #{tag1.cliPrenom} - #{tag1.numeroPieceIdentite}" itemValue="#{tag1.cliId}"/>  
+                                    </p:selectOneMenu>
+                                <h:outputLabel value="Montant:"  />
+                                <p:inputText  value="#{depositeBean.deposite.montant}" title="Montant" required="true" label="Montant"/>
+
+
+
+                            </h:panelGrid>
+
+                            <p:commandButton value="Valider" update="grid" icon="ui-icon-check" validateClient="true" style="margin-right:10px" action="#{depositeBean.creer}"/>
+
+                        </h:form>
+
+                    </f:view>
+
+                </p:dialog>   
+
+
+                <div class="EmptyBox10"></div>
+            </div>
+        </div>
+        <script>
+
+            PrimeFaces.widget.Dialog.prototype.applyFocus = function () {
+                var firstInput = this.jq.find(':not(:submit):not(:button):input:visible:enabled:first');
+                if (!firstInput.hasClass('hasDatepicker')) {
+                    firstInput.focus();
+                }
+            }
+        </script>
+
+    </ui:define>
+
+</ui:composition>
