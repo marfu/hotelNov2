@@ -60,7 +60,10 @@ public class TFactureService {
     
     
 
-    
+    public TFacture CreerorupdateTFacture(TFacture tfacture) {
+
+        return tFactureDao.createOrUpdateTFacture(tfacture);
+    }
 
     
 }

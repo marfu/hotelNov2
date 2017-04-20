@@ -25,4 +25,5 @@ public interface TClientDao extends GenericDao<TClient>{
      public TClient listTclient(long id);
      
      public TClient getUserfindByNumPiece(String num);
+     public List <TClient> searchListTclient(String type,String nom);
 }

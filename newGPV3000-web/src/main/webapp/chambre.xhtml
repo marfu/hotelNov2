@@ -91,11 +91,21 @@
                             <p:column headerText="Categorie" sortBy="#{item.chCategorie.catChambreDesc}" filterBy="#{item.chCategorie.catChambreDesc}">
                                 <h:outputText value="#{item.chCategorie.catChambreDesc}" />
                             </p:column>
+                            
+                            <p:column headerText="Etat" sortBy="#{item.etat}">
+                                <p:commandButton ajax="true" actionListener="#{chambreBean.detailChambre}" update=":formSatus" oncomplete="PF('dlg3').show();" icon="ui-icon fa fa-edit" style="color:white">
 
-                              <p:column style="width:32px">
-                                  <p:commandButton ajax="true" actionListener="#{chambreBean.detailChambre}" update=":myform" oncomplete="PF('dlg2').show();" icon="ui-icon fa fa-edit" style="color:white">
+                                    <f:param name="userId" value="#{item.chId}" />
+                                </p:commandButton>
+                                <h:outputText value="#{item.etat}" style="width: "/>
+                                
+                                
+                            </p:column>
 
-                                      <f:param name="userId" value="#{item.chId}" />
+                            <p:column style="width:32px">
+                                <p:commandButton ajax="true" actionListener="#{chambreBean.detailChambre}" update=":myform" oncomplete="PF('dlg2').show();" icon="ui-icon fa fa-edit" style="color:white">
+
+                                    <f:param name="userId" value="#{item.chId}" />
                                 </p:commandButton>
                             </p:column>
 
@@ -121,12 +131,24 @@
                                     <h:outputLabel value="Numero Chambre:" for="NumeroChambre" />
                                     <p:inputText id="NumeroChambre" value="#{chambreBean.tchambre.chNumeroChambre}" title="Numero Chambre" required="true" label="Numero Chambre"/>
 
-                                     <h:outputLabel value="Categorie :" for="categorie" />
-                                     <p:selectOneMenu value="#{chambreBean.idcategorie}" required="true" label="categorie">  
+                                    <h:outputLabel value="categorie :" />
+                                    <p:selectOneMenu value="#{chambreBean.idcategorie}" required="true" label="categorie">  
                                         <f:selectItem itemLabel="Selectioner une categorie" itemValue="" />  
                                         <f:selectItems value="#{categorieChambreBean.listTCategorieChambre}" var="tag1"
                                                        itemLabel="#{tag1.catChambreLib}" itemValue="#{tag1.catChambreId}"/>  
                                     </p:selectOneMenu>
+
+                                    <h:outputLabel value="Statut :"/>
+                                    <p:selectOneMenu required="true"  value="#{chambreBean.tchambre.etat}"   label="Statut" style="width:270px !important">  
+
+
+                                        <f:selectItem itemLabel="--Statut--" itemValue="" />  
+                                        <f:selectItem itemLabel="LIBRE PROPRE" itemValue="LIBRE_PROPRE" />  
+                                        <f:selectItem itemLabel="LIBRE SALE" itemValue="LIBRE_SALE" /> 
+                                        <f:selectItem itemLabel="HORS SERVICE" itemValue="HORS_SERVICE" /> 
+
+                                    </p:selectOneMenu>
+
                                 </h:panelGrid>
 
                                 <p:commandButton value="Valider" update="grid" icon="ui-icon-check" validateClient="true" style="margin-right:10px" action="#{chambreBean.creerUpdateChambre}"/>
@@ -137,6 +159,40 @@
 
                     </p:dialog>   
                     <!--Modification-->
+                    
+                    
+                    
+                    
+                     <p:dialog header="Statut " widgetVar="dlg3" modal="true" height="auto" >
+
+
+                        <f:view>
+                            <h:form id="formSatus">
+
+                                <p:messages autoUpdate="true"/>
+
+                                <h:panelGrid id="gridStatus" columns="2" cellpadding="5">
+
+                                    <h:outputLabel value="Statut :" />
+                                    <p:selectOneMenu required="true"  value="#{chambreBean.tchambre.etat}"   label="Statut" style="width:270px !important">  
+
+
+                                        <f:selectItem itemLabel="--Statut--" itemValue="" />  
+                                        <f:selectItem itemLabel="LIBRE PROPRE" itemValue="LIBRE_PROPRE" />  
+                                        <f:selectItem itemLabel="LIBRE SALE" itemValue="LIBRE_SALE" /> 
+                                        <f:selectItem itemLabel="HORS SERVICE" itemValue="HORS_SERVICE" /> 
+
+                                    </p:selectOneMenu>
+
+                                </h:panelGrid>
+
+                                <p:commandButton value="Valider" update="gridStatus" icon="ui-icon-check" validateClient="true" style="margin-right:10px" action="#{chambreBean.creerUpdateChambre}"/>
+
+                            </h:form>
+
+                        </f:view>
+
+                    </p:dialog> 
 
                 </f:view>
 

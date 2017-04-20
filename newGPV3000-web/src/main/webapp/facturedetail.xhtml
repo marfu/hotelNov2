@@ -58,17 +58,17 @@
                 <div class="EmptyBox20"></div>
 
                 <f:view>
-                  
-                <p:breadCrumb>
-                    <p:menuitem value="Home" url="#" />
-                    <p:menuitem value="Archives Factures" url="#" />
-                </p:breadCrumb>
-                <div class="EmptyBox20"></div>
-                    <h:form>
+
+                    <p:breadCrumb>
+                        <p:menuitem value="Home" url="#" />
+                        <p:menuitem value="Archives Factures" url="#" />
+                    </p:breadCrumb>
+                    <div class="EmptyBox20"></div>
+                    <h:form id="formfacture">
                         <p:dataTable var="item" value="#{facturedtoBean.listfatureDto}" id="grid" paginator="true"
                                      paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                      rowsPerPageTemplate="5,10,15" rows="10">
-                            
+
                             <p:column headerText="Date de création">
                                 <h:outputText value="#{item.factDateCreate}" >
                                     <f:convertDateTime pattern="dd/MM/yyyy HH:mm" /></h:outputText>
@@ -88,10 +88,20 @@
                             <p:column headerText="Prix">
                                 <h:outputText value="#{item.prix}" />
                             </p:column>
+                            <p:column headerText="Statut">
+                                <h:outputText value="#{item.statuId}">
+                                    
+                                </h:outputText>
+                            </p:column>
 
+                            <p:column>
+                                <p:commandButton oncomplete="PF('validDialog').show()" style="color:white" update=":formfacture:validDialog" icon="ui-icon fa fa-edit" value="Encaisser" rendered="#{item.statuId!=facturedtoBean.etatfacture}">
 
+                                    <f:setPropertyActionListener value="#{item}" target="#{facturedtoBean.facturedoparam}" />
+                                </p:commandButton>
+                            </p:column>
                             <p:column style="width:32px">
-                                <p:commandButton ajax="true" action="#{facturedtoBean.detailFacturef}" update=":myform" oncomplete="PF('dlgSservice').show();" icon="ui-icon fa fa-edit" style="color:white">
+                                <p:commandButton ajax="true" action="#{facturedtoBean.detailFacturef}" update=":myform" oncomplete="PF('dlgSservice').show();" icon="ui-icon-search" style="color:white" >
 
                                     <f:param name="factureID" value="#{item.factId}" />
                                 </p:commandButton>
@@ -99,9 +109,34 @@
 
 
 
-
                         </p:dataTable>
 
+
+                        <p:dialog header="Encaisser" id="validDialog" widgetVar="validDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                            <p:outputPanel id="validDetail" style="text-align:center;">
+                                <p:panelGrid  columns="2"  columnClasses="label,value">
+
+                                    <h:outputText value="Mode de paiment:" />
+                                    <p:selectOneMenu   value="#{facturedtoBean.modePaiementId}"  label="Remise">  
+                                        <f:selectItem itemLabel="--Mode de paiement--" itemValue="" />     
+                                        <f:selectItems value="#{tModePaiement.listModePaiement}" var="ta"  itemLabel="#{ta.libelleMode}" itemValue="#{ta.id}"/>  
+
+                                    </p:selectOneMenu>
+                                    <h:outputText value="Numero chèque (*):" />
+                                    <p:inputText value="#{facturedtoBean.facturedoparam.numchecque}" />
+                                    <h:outputText value="Montant facture:" />
+                                    <h:outputText value="#{facturedtoBean.facturedoparam.prix}" style="color: red; font-weight: bolder"/>
+                                    <h:outputText value="Montant Réglé:" />
+                                    <p:inputText value="#{facturedtoBean.facturedoparam.montantregle}" required="true"/>
+
+                                   
+                                </p:panelGrid>
+                                <h:outputText value="(*) les champs préfixés de ce symbole sont optionnels" style="color: red" />
+                                <p:commandButton validateClient="true" actionListener="#{facturedtoBean.EncaisserFacture}" update=":formfacture" oncomplete="PF('validDialog').hide()" value="Valider" title="View">
+
+                                </p:commandButton>
+                            </p:outputPanel>
+                        </p:dialog>
                     </h:form>
                     <!--Sous Service-->
                     <p:dialog header="Détails facture " widgetVar="dlgSservice" modal="true" showEffect="fade" hideEffect="fade" resizable="false" width="800" >

@@ -151,6 +151,10 @@
             <from-outcome>factureDetail</from-outcome>
             <to-view-id>/facturedetail.xhtml</to-view-id>
         </navigation-case>
+        <navigation-case>
+            <from-outcome>client</from-outcome>
+            <to-view-id>/client.xhtml</to-view-id>
+        </navigation-case>
         <!-- Statistique -->
         
 

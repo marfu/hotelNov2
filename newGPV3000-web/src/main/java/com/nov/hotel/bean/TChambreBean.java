@@ -6,6 +6,7 @@
 package com.nov.hotel.bean;
 
 import com.nov.hotel.entities.EtatChambreEnum;
+import com.nov.hotel.entities.TCategorieChambre;
 import com.nov.hotel.entities.TChambre;
 import com.nov.hotel.services.TCategorieChambreService;
 import com.nov.hotel.services.TChambreService;
@@ -35,6 +36,7 @@ public class TChambreBean implements Serializable {
 
     private TChambre tchambre= new TChambre();
     private List<TChambre> listTChambre;
+    private EtatChambreEnum etatchambre;
 
     private long idcategorie;
     
@@ -67,6 +69,14 @@ public class TChambreBean implements Serializable {
         this.listTChambre = listTChambre;
     }
 
+    public EtatChambreEnum getEtatchambre() {
+        return etatchambre;
+    }
+
+    public void setEtatchambre(EtatChambreEnum etatchambre) {
+        this.etatchambre = etatchambre;
+    }
+
     
     
     
@@ -77,15 +87,20 @@ public class TChambreBean implements Serializable {
     // fonction et methode
     public String creerUpdateChambre() {
         Date today = new Date();
-
-        tchambre.setChCategorie(tCategorieChambreService.finbyIDCategorieChambre(idcategorie));
+        TCategorieChambre tcat;
+        tcat=tCategorieChambreService.finbyIDCategorieChambre(idcategorie);
+        if(tcat!=null){
+         tchambre.setChCategorie(tcat);   
+        }
+        
+   
         System.out.println("getChLib "+ tchambre.getChLib());
         System.out.println("getChNumeroChambre "+ tchambre.getChNumeroChambre());
 
         if (tchambre.getChId() != 0) {
             tchambre.setChDateModif(today);
         } else {
-            tchambre.setEtat(EtatChambreEnum.LIBRE);
+            tchambre.setEtat(EtatChambreEnum.LIBRE_PROPRE);
             tchambre.setChDateCreate(today);
         }
 

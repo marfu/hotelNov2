@@ -53,6 +53,12 @@ public class TClientService  {
       return tClientDao.findAll();
        
     }
+        public List<TClient> searchListTclient(String type,String nom) {
+             
+        
+      return tClientDao.searchListTclient(type, nom);
+       
+    }
     
     
 }

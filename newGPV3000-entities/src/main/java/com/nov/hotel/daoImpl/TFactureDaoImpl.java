@@ -78,4 +78,28 @@ public class TFactureDaoImpl extends GenericDaoImpl<TFacture> implements TFactur
 
         return tFacture;
     }
+
+    @Override
+    public TFacture createOrUpdateTFacture(TFacture u) {
+        TFacture temp = getTFacture(u.getFactId());
+        if (temp != null) {
+            em.merge(u);
+            em.flush();
+            return u;
+        } else {
+            em.persist(u);
+            return u;
+        }
+    }
+
+    @Override
+    public TFacture getTFacture(long id) {
+         try {
+			TFacture u = em.find(TFacture.class, id);
+
+			return u;
+		} catch (Exception e) {
+                	return null;
+		}
+    }
 }

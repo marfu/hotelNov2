@@ -1,0 +1,234 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+
+    <ui:define name="content">
+        <div class="Container100">
+            <div class="ContainerIndent">
+                <p:breadCrumb>
+                    <p:menuitem value="Home" url="#" />
+                    <p:menuitem value="Gestion des chambres" url="#" />
+                    <p:menuitem value="Chambres" url="#" />
+                </p:breadCrumb>
+                <div class="EmptyBox20"></div>
+
+                <div>
+                    <!--<div style="float:left">-->
+                    <h:form>
+                        <h:panelGrid columns="1" cellpadding="5">
+
+                            <h:outputLabel value="Type client :" for="catClient" />
+                            <p:selectOneMenu required="true" value="#{tClientBean.type}" id='catClient' label="Menu parent" style="width:270px !important">  
+                                <p:ajax listener="#{tClientBean.changeCategorie}" update=":form :form:grid" />
+
+                                <f:selectItem itemLabel="Individu" itemValue="INDIVIDU"/>  
+                                <f:selectItem itemLabel="Groupe" itemValue="GROUPE" />  
+                            </p:selectOneMenu>
+
+
+
+
+                        </h:panelGrid>
+                        <!--</div>-->
+                    </h:form>
+                </div>
+
+                <f:view>
+
+                    <h:form id="form">
+                        <p:dataTable var="item" value="#{tClientBean.listClientsearch}" id="grid" paginator="true"
+                                     paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                     rowsPerPageTemplate="5,10,15" rows="10">
+
+
+
+
+                            <p:column headerText="Nom" rendered="#{tClientBean.testCat==true}" sortBy="#{item.cliNom}" filterBy="#{item.cliNom}">
+                                <h:outputText value="#{item.cliNom}" />
+                            </p:column>
+                            <p:column headerText="Prenom" rendered="#{tClientBean.testCat==true}" sortBy="#{item.cliPrenom}" filterBy="#{item.cliPrenom}">
+                                <h:outputText value="#{item.cliPrenom}" />
+                            </p:column>
+                            <p:column headerText="Sexe"  rendered="#{tClientBean.testCat==true}">
+                                <h:outputText value="#{item.cliSexe}" />
+                            </p:column>
+
+
+
+
+
+                            <p:column headerText="Raison Social" rendered="#{tClientBean.testCat==false}" sortBy="#{item.raisonSociale}" filterBy="#{item.raisonSociale}" >
+                                <h:outputText value="#{item.raisonSociale}"/>
+                            </p:column>
+                            <p:column headerText="numero" rendered="#{tClientBean.testCat==false}" >
+
+                                <h:outputText value="#{item.cliMsisdn}"/>
+
+                            </p:column>
+                            <p:column headerText="Email" rendered="#{tClientBean.testCat==false}" >
+
+                                <h:outputText value="#{item.cliEmail}"/>
+
+                            </p:column>
+
+                            <p:column headerText="Type de Client"  >
+
+                                <h:outputText value="#{item.typeClient}"/>
+
+                            </p:column>
+
+                            <p:column style="width:32px">
+                                <p:commandButton ajax="true" action="#{tClientBean.detailCompteClient}" update=":form :myform" oncomplete="PF('dlgDetaiCClient').show();" icon="ui-icon-search" style="color:white">
+
+                                    <f:param name="clientID" value="#{item.cliId}" />
+                                </p:commandButton>
+                            </p:column>
+
+                        </p:dataTable>
+                    </h:form>  
+
+                    
+                    <p:dialog header="Detail" widgetVar="dlgDetaiCClient" modal="true" height="auto" >
+
+
+                        <f:view>
+                            <div > 
+                            <h:form id="myform">
+                                <p:messages autoUpdate="true"/>
+                                <div style="width: 30%;float: left">
+                                    <p:fieldset legend="Detail compte Client" style="margin-bottom:20px">
+                                        <h:panelGrid id="gridDetaiCClient" columns="2" cellpadding="5">
+
+                                            <h:outputLabel value="Creer le" rendered="#{tClientBean.testCat==true}" />
+                                            <h:outputLabel id="DateCreate" rendered="#{tClientBean.testCat==true}" value="#{tClientBean.compteClient.client.cliDateCreate}" title="Libelle"/>
+
+                                            <h:outputLabel value="Nom" rendered="#{tClientBean.testCat==true}"/>
+                                            <h:outputLabel id="Nom" rendered="#{tClientBean.testCat==true}" value="#{tClientBean.compteClient.client.cliNom}" title="Nom"/>
+
+                                            <h:outputLabel value="Prenom:" rendered="#{tClientBean.testCat==true}" />
+                                            <h:outputLabel id="Prenom" rendered="#{tClientBean.testCat==true}" value="#{tClientBean.compteClient.client.cliPrenom}" title="Prenom"/>
+
+                                            <h:outputLabel value="Sexe:" rendered="#{tClientBean.testCat==true}"/>
+                                            <h:outputLabel id="Sexe" rendered="#{tClientBean.testCat==true}" value="#{tClientBean.compteClient.client.cliSexe}" title="Sexe"/>
+
+                                            <h:outputLabel value="Type de piece" rendered="#{tClientBean.testCat==true}"/>
+                                            <h:outputLabel id="pieceIdentite" rendered="#{tClientBean.testCat==true}" value="#{tClientBean.compteClient.client.pieceIdentite}" title="pieceIdentite"/>
+
+                                            <h:outputLabel value="numeroPieceIdentite:" rendered="#{tClientBean.testCat==true}" />
+                                            <h:outputLabel id="numeroPieceIdentite" rendered="#{tClientBean.testCat==true}" value="#{tClientBean.compteClient.client.numeroPieceIdentite}" title="numeroPieceIdentite"/>
+
+                                            <h:outputLabel value="raison Sociale:" rendered="#{tClientBean.testCat==false}" />
+                                            <h:outputLabel id="raisonSociale" rendered="#{tClientBean.testCat==false}" value="#{tClientBean.compteClient.client.raisonSociale}" title="raisonSociale"/>
+
+                                            <h:outputLabel value="Numero:" />
+                                            <h:outputLabel id="Numero" value="#{tClientBean.compteClient.client.cliMsisdn}" title="Numero"/>
+
+                                            <h:outputLabel value="Email:"/>
+                                            <h:outputLabel id="Email" value="#{tClientBean.compteClient.client.cliEmail}" title="Email"/>
+
+                                            <h:outputLabel value="solde" />
+                                            <h:outputLabel id="solde" value="#{tClientBean.compteClient.solde}" title="Libelle" style="color: red ; font-weight: bolder"/>
+                                        </h:panelGrid>
+                                    </p:fieldset>
+                                </div>
+                                <div style="width: 70%;float: left">
+
+                                    <p:fieldset legend="Liste des transactions" style="margin-bottom:20px">
+                                        <p:dataTable var="itemTransac" id="testDT" value="#{tClientBean.listTransaction}" scrollable="true" scrollHeight="200" >
+                                            <p:column headerText="Date">
+                                                <h:outputText value="#{itemTransac.dateTransaction}" >
+                                                    <f:convertDateTime pattern="dd/MM/yyyy HH:mm" /></h:outputText>
+                                            </p:column>
+
+                                            <p:column headerText="Transaction" width="200px">
+                                                <h:outputText value="#{itemTransac.etat}" />
+                                            </p:column>
+
+                                            <p:column headerText="Montant" width="100px">
+                                                <h:outputText value="#{itemTransac.montantTransaction}" />
+                                            </p:column>
+                                            
+                                            <p:column headerText="Motif">
+                                                <h:outputText value="#{itemTransac.motif}" />
+                                            </p:column>
+
+                                        </p:dataTable>
+                                    </p:fieldset>
+                                </div>
+
+
+                                <p:commandButton  label="Effectuer une transaction" ajax="true"  update=":form :myform" oncomplete="PF('dlgAddTransaction').show();" icon="ui-icon fa fa-edit" style="color:white" value="Effectuer une transaction">
+
+                                    <f:param name="clientID" value="#{item.cliId}" />
+                                </p:commandButton>
+
+                            </h:form>
+</div>
+                        </f:view>
+
+                    </p:dialog>   
+                        
+
+                    <p:dialog header="Effectuer Transaction" widgetVar="dlgAddTransaction" modal="true" height="auto" >
+
+
+                        <f:view>
+                            <h:form id="formAddTransaction">
+
+                                <p:messages autoUpdate="true"/>
+
+                                <h:panelGrid id="gridAddTransaction" columns="2" cellpadding="5">
+
+                                    <h:outputLabel value="Type Operation :"  />
+                                    <p:selectOneMenu required="true" value="#{tClientBean.typeTransac}" id='tarnsactetat'  style="width:270px !important">  
+
+                                        <f:selectItem itemLabel="DEPOT" itemValue="DEPOT"/>  
+                                        <f:selectItem itemLabel="RETRAIT" itemValue="RETRAIT" />  
+                                    </p:selectOneMenu>
+
+                                    <h:outputLabel value="Montant Transaction:" for="Montant" />
+                                    <p:inputText id="Montant" value="#{tClientBean.transaction.montantTransaction}" title="Montant" required="true" label="Montant"/>
+
+                                    <h:outputLabel value="Motif:" for="Motif" />
+                                    <p:inputText id="Motif" value="#{tClientBean.transaction.motif}" title="Motif"  label="Motif"/>
+
+
+                                </h:panelGrid>
+                                <p:commandButton ajax="true"  update=":form :myform" oncomplete="PF('dlgAddTransaction').hide();" icon="ui-icon fa fa-check" style="color:white" action="#{tClientBean.creerTransaction}"value="Enregistrer"/>
+
+
+                            </h:form>
+
+                        </f:view>
+
+                    </p:dialog>   
+
+
+
+
+
+
+                </f:view>
+            </div>
+        </div>
+    </ui:define>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</ui:composition>

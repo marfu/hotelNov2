@@ -238,7 +238,7 @@ public class AllReservationBean implements Serializable {
     }
     
     public List<TChambre> getListChambreLibre() {
-        return listChambreLibre = tChambreService.listChambreByEtat(EtatChambreEnum.LIBRE);
+        return listChambreLibre = tChambreService.listChambreByEtat(EtatChambreEnum.LIBRE_PROPRE);
     }
     
     public void setListChambreLibre(List<TChambre> listChambreLibre) {
@@ -320,7 +320,7 @@ public class AllReservationBean implements Serializable {
         //reservationSelected.getResId();
         // TChambreReservation tChambreRese = tChambreReservationService.findChambreReser(reservationSelected.getResId(), idCHAM);
         TChambre c = tChambreService.findChambreById(idCHAM);
-        c.setEtat(EtatChambreEnum.LIBRE);
+        c.setEtat(EtatChambreEnum.LIBRE_PROPRE);
         tChambreService.CreerOrUpdate(c);
         tChambreReservationService.delete(reservationSelected.getResId(), idCHAM);
         
@@ -450,7 +450,7 @@ public class AllReservationBean implements Serializable {
             for (TChambreReservation tempReser : tchReser) {
                 
                 TChambre tch = tChambreService.findChambreById(tempReser.getChambre().getChId());
-                tch.setEtat(EtatChambreEnum.LIBRE);
+                tch.setEtat(EtatChambreEnum.LIBRE_PROPRE);
                 tChambreService.CreerOrUpdate(tch);
                 
                 tChambreReservationService.delete(reservation.getResId(), tempReser.getChambre().getChId());
@@ -477,7 +477,7 @@ public class AllReservationBean implements Serializable {
                 
                 tChambreReservationService.CreerOrUpdateTCategorieChambre(tChambreReservation);
                 
-                tch.setEtat(EtatChambreEnum.RESERVEE);
+//                tch.setEtat(EtatChambreEnum.RESERVEE);
                 tChambreService.CreerOrUpdate(tch);
                 
             }
@@ -503,7 +503,7 @@ public class AllReservationBean implements Serializable {
             
             TChambre tempChambre = str.getChambre();
             
-            tempChambre.setEtat(EtatChambreEnum.LIBRE);
+            tempChambre.setEtat(EtatChambreEnum.LIBRE_PROPRE);
             tChambreService.CreerOrUpdate(tempChambre);
             
         }
@@ -588,7 +588,7 @@ public class AllReservationBean implements Serializable {
                 
                 tOccupationService.CreerTOccupation(u);
                 
-                tchambre.setEtat(EtatChambreEnum.OCCUPEE);
+//                tchambre.setEtat(EtatChambreEnum.OCCUPEE);
                 tChambreService.CreerOrUpdate(tchambre);
                 
             }
@@ -616,7 +616,7 @@ public class AllReservationBean implements Serializable {
     public void loadChambreLibre() {
         
         System.out.println("xxxxxxxxx===========");
-        listChambreLibre = tChambreService.listChambreByEtat(EtatChambreEnum.LIBRE);
+        listChambreLibre = tChambreService.listChambreByEtat(EtatChambreEnum.LIBRE_PROPRE);
         System.out.println("xxxxxxxxx===========" + listChambreLibre.size());
         RequestContext context = RequestContext.getCurrentInstance();
         context.execute("PF('carDialog').show();");

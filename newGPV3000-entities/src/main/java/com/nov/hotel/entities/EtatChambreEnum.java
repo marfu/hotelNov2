@@ -9,8 +9,8 @@ package com.nov.hotel.entities;
  */
 public enum EtatChambreEnum {
 
-	LIBRE,
-	OCCUPEE,
-	RESERVEE,
+	
+	LIBRE_PROPRE,
+	LIBRE_SALE,
         HORS_SERVICE
 }

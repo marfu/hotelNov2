@@ -30,7 +30,6 @@ import com.nov.hotel.services.TModePaiementService;
 import com.nov.hotel.services.TOccupationService;
 import com.nov.hotel.services.TRemiseService;
 import com.nov.hotel.services.TServiceService;
-import com.sun.jmx.remote.internal.ArrayQueue;
 import java.io.Serializable;
 import java.text.Format;
 import java.text.SimpleDateFormat;
@@ -42,7 +41,6 @@ import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.context.FacesContext;
-import javax.faces.event.AjaxBehaviorEvent;
 import javax.inject.Named;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.SelectEvent;
@@ -423,7 +421,7 @@ public class ChambreFactureBean implements Serializable {
 
             TChambre tchambre = tChambreService.findChambreById(str.getChambreOccupation().getChambre().getChId());
             System.out.println("xxxxxxttttt" + tchambre.getChId());
-            tchambre.setEtat(EtatChambreEnum.LIBRE);
+//            tchambre.setEtat(EtatChambreEnum.LIBRE);
             tChambreService.CreerOrUpdate(tchambre);
 
         }

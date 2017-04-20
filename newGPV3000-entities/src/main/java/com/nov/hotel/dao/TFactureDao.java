@@ -24,5 +24,8 @@ public interface TFactureDao extends GenericDao<TFacture>{
      public long findLastTFacture();
      
       public List<TFacture> listTFacture();
+      public TFacture createOrUpdateTFacture(TFacture u);
+
+    public TFacture getTFacture(long id);
    
 }

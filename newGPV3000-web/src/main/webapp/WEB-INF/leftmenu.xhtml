@@ -27,7 +27,7 @@
 
                         <p:menuitem  value="Check out" icon="icon-logout-1" outcome="chambreOccupes" rendered="#{securityBean.hasPermission('Encaisser')}" />
                         <p:menuitem  value="Archives factures" icon=" icon-archive" outcome="facturedetail" rendered="#{securityBean.hasPermission('Archive')}" />
-                         <p:menuitem  value="Dépots clients" icon=" icon-credit-card-1" outcome="deposit" rendered="#{securityBean.hasPermission('Deposit')}"/>
+                        <p:menuitem  value="Dépots clients" icon=" icon-credit-card-1" outcome="deposit" rendered="#{securityBean.hasPermission('Deposit')}"/>
 
                         <p:submenu label="Gestion des chambres" icon="icon-book" rendered="#{securityBean.hasPermission('Chambre')}">
                             <p:menuitem value="Chambres" outcome="chambre" icon="icon-sort-numeric"/>
@@ -38,7 +38,7 @@
                             <p:menuitem value="Categorie chambres" outcome="categorieChambre" icon="icon-folder-empty-1"/>
                             <p:menuitem  value="Service" icon="icon-cog" outcome="service" />
                             <p:menuitem  value="Articles" icon="icon-book" outcome="article" />
-                             <p:menuitem  value="Parametrages" icon="icon-book" outcome="parametrage" />
+                            <p:menuitem  value="Parametrages" icon="icon-book" outcome="parametrage" />
 
 
                         </p:submenu>
@@ -48,7 +48,7 @@
                             <p:menuitem value="Permissions" outcome="listPermissions" icon="icon-lock-open"/>
 
                         </p:submenu>
-
+                        <p:menuitem  value="Clients" icon="icon-book" outcome="client" />
 
                     </ps:menu>
                 </h:form>

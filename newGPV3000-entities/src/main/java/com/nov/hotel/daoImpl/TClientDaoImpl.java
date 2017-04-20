@@ -7,8 +7,11 @@ package com.nov.hotel.daoImpl;
 
 import com.nov.hotel.entities.TClient;
 import com.nov.hotel.dao.TClientDao;
+import com.nov.hotel.entities.ClientEnum;
 import java.util.List;
 import javax.ejb.Stateless;
+import javax.persistence.NoResultException;
+import javax.persistence.Query;
 
 /**
  *
@@ -67,4 +70,53 @@ public class TClientDaoImpl extends GenericDaoImpl<TClient> implements TClientDa
             return null;
         }
     }
+
+    @Override
+    public List<TClient> searchListTclient(String type, String nom) {
+        List<TClient> results = null;
+            
+        try {
+            Query q;
+            if (nom == null) {
+                q = em.createQuery("SELECT c FROM TClient c where c.typeClient= :type ");
+            } else {
+                q = em.createQuery("SELECT c FROM TClient c where c.typeClient= :type AND :nomChampTable=:nom ");
+                q.setParameter("nom", nom);
+            }
+            
+            
+
+            if (type == null) {
+                q.setParameter("type", ClientEnum.INDIVIDU);
+                if (nom != null) {
+                    q.setParameter("nomChampTable", "c.cliNom");
+                }
+                
+                
+                
+
+            } else {
+                
+                
+                if (type.equals("INDIVIDU")) {
+                    if (nom != null) {
+                    q.setParameter("nomChampTable", "c.cliNom");
+                }
+                    q.setParameter("type", ClientEnum.INDIVIDU);
+                  
+                } else {
+                    if(nom != null) {
+                    q.setParameter("nomChampTable", "c.raisonSociale");
+                }
+                    q.setParameter("type", ClientEnum.GROUPE);
+                   
+                }
+            }
+            
+           results =  q.getResultList();
+        } catch (NoResultException nre) {
+        }
+        return results;
+    }
+
 }

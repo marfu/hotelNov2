@@ -33,6 +33,12 @@ public class FactureDto {
     private double prix;
     private long qte;
     private String numFacture;
+    private double soldeCompteClient;
+    private double montantregle;
+    private double montantrendu;
+    private double montantTaux;
+    private String numchecque;
+    
     
 
     public long getFactId() {
@@ -125,10 +131,59 @@ public class FactureDto {
         this.client = client;
     }
 
+    public double getSoldeCompteClient() {
+        return soldeCompteClient;
+    }
+
+    public void setSoldeCompteClient(double soldeCompteClient) {
+        this.soldeCompteClient = soldeCompteClient;
+    }
+
+    public double getMontantregle() {
+        return montantregle;
+    }
+
+    public void setMontantregle(double montantregle) {
+        this.montantregle = montantregle;
+    }
+
+    public double getMontantrendu() {
+        return montantrendu;
+    }
+
+    public void setMontantrendu(double montantrendu) {
+        this.montantrendu = montantrendu;
+    }
+
+    public double getMontantTaux() {
+        return montantTaux;
+    }
+
+    public void setMontantTaux(double montantTaux) {
+        this.montantTaux = montantTaux;
+    }
+
+    public String getNumchecque() {
+        return numchecque;
+    }
+
+    public void setNumchecque(String numchecque) {
+        this.numchecque = numchecque;
+    }
+
     @Override
     public String toString() {
-        return "FactureDto{" + "factId=" + factId + ", factDateCreate=" + factDateCreate + ", factDateModif=" + factDateModif + ", client=" + client + ", statuId=" + statuId + ", userCreate=" + userCreate + ", userModif=" + userModif + ", remise=" + remise + ", prix=" + prix + ", qte=" + qte + ", numFacture=" + numFacture + '}';
+        return "FactureDto{" + "factId=" + factId + ", factDateCreate=" + factDateCreate + ", factDateModif=" + factDateModif + ", client=" + client + ", statuId=" + statuId + ", userCreate=" + userCreate + ", userModif=" + userModif + ", remise=" + remise + ", prix=" + prix + ", qte=" + qte + ", numFacture=" + numFacture + ", soldeCompteClient=" + soldeCompteClient + ", montantregle=" + montantregle + ", montantrendu=" + montantrendu + ", montantTaux=" + montantTaux + ", numchecque=" + numchecque + '}';
     }
+
+    
+   
+
+    
+    
+    
+    
+
     
     
     

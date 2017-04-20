@@ -355,6 +355,8 @@ public class ReservationBean implements Serializable {
 
     public void changeCategorie() {
         System.out.println(client.getTypeClient());
+        System.out.println("ddddddddddddddd      " +typeClient);
+        
         if ((typeClient).equals("INDIVIDU")) {
             testCat = true;
 
@@ -418,7 +420,7 @@ public class ReservationBean implements Serializable {
 
                 tChambreReservationService.CreerOrUpdateTCategorieChambre(tChambreReservation);
 
-                tch.setEtat(EtatChambreEnum.RESERVEE);
+//                tch.setEtat(EtatChambreEnum.RESERVEE);
                 tChambreService.CreerOrUpdate(tch);
 
             }
@@ -477,7 +479,7 @@ public class ReservationBean implements Serializable {
     public void loadChambreLibre() {
 
         System.out.println("xxxxxxxxx===========");
-        listChambreLibre = tChambreService.listChambreByEtat(EtatChambreEnum.LIBRE);
+        listChambreLibre = tChambreService.listChambreByEtat(EtatChambreEnum.LIBRE_PROPRE);
         System.out.println("xxxxxxxxx===========" + listChambreLibre.size());
         RequestContext context = RequestContext.getCurrentInstance();
         context.execute("PF('carDialog').show();");

@@ -247,7 +247,7 @@ public class FileUploadController {
                         tchambre.setChDateCreate(today);
                         tchambre.setChLib(nomChambre);
                         tchambre.setChNumeroChambre(numChambre);
-                        tchambre.setEtat(EtatChambreEnum.LIBRE);
+                        tchambre.setEtat(EtatChambreEnum.LIBRE_PROPRE);
                         tchambre = tchambreService.CreerOrUpdate(tchambre);
 
                     }

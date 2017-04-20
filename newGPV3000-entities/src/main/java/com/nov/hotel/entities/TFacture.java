@@ -44,6 +44,12 @@ public class TFacture implements Serializable {
     @Enumerated(EnumType.STRING)
     @Column(name = "ETAT", length = 10)
     private EtatFactureEnum statuId;
+    
+    private double montantRegle;
+    private double montantrendu;
+    //private double montantRegle;
+    
+    
 
 //    @ManyToOne
 //   	@JoinColumn(name = "TFACT_CH_ID", referencedColumnName = "TCH_ID")
@@ -161,10 +167,29 @@ public class TFacture implements Serializable {
         this.client = client;
     }
 
-    @Override
-    public String toString() {
-        return "TFacture{" + "factId=" + factId + ", factDateCreate=" + factDateCreate + ", factDateModif=" + factDateModif + ", statuId=" + statuId + ", userCreate=" + userCreate + ", userModif=" + userModif + ", remise=" + remise + ", modePaiement=" + modePaiement + ", client=" + client + ", numFacture=" + numFacture + ", numCheque=" + numCheque + '}';
+    public double getMontantRegle() {
+        return montantRegle;
     }
 
+    public void setMontantRegle(double montantRegle) {
+        this.montantRegle = montantRegle;
+    }
+
+    public double getMontantrendu() {
+        return montantrendu;
+    }
+
+    public void setMontantrendu(double montantrendu) {
+        this.montantrendu = montantrendu;
+    }
+
+    @Override
+    public String toString() {
+        return "TFacture{" + "factId=" + factId + ", factDateCreate=" + factDateCreate + ", factDateModif=" + factDateModif + ", statuId=" + statuId + ", montantRegle=" + montantRegle + ", montantrendu=" + montantrendu + ", userCreate=" + userCreate + ", userModif=" + userModif + ", remise=" + remise + ", modePaiement=" + modePaiement + ", client=" + client + ", numFacture=" + numFacture + ", numCheque=" + numCheque + '}';
+    }
+
+    
+    
+    
 
 }
